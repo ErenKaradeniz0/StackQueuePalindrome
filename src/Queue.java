@@ -1,4 +1,4 @@
-public class Queue<Type> implements IQueue {
+public class Queue<Type> implements IQueue<Type> {
     private Node<Type> head; //named frontPtr in slides
     private Node<Type> tail; //named backPtr in slides
 
@@ -6,15 +6,14 @@ public class Queue<Type> implements IQueue {
         head=null;
         tail=null;
     }
-    public void enqueue(Object data) {
-        Node<Type> node = new Node<Type>((Type) data, null);
+    public void enqueue(Type data) {
+        Node<Type> node = new Node<>(data, null);
         if (isEmpty()) { //first node
             head = node;
-            tail = node;
         } else {
             tail.next = node;
-            tail = node;
         }
+        tail = node;
     }
 
     //remove existing item from the queue back/tail
@@ -22,16 +21,14 @@ public class Queue<Type> implements IQueue {
         if(isEmpty()) {//empty queue
             return null;
         }
+        Type retVal = head.data;
         if(head.next == null) { //queue with a single node
-            Type retVal = head.data;
             head = null;
             tail = null;
-            return retVal;
         } else { //queue with more than one node
-            Type retVal = head.data;
             head = head.next;
-            return retVal;
         }
+        return retVal;
     }
 
 
